@@ -81,7 +81,7 @@ class Comment(models.Model):
 class Blog(models.Model):
     name = models.CharField(max_length=150, verbose_name='Название блога')
     slug = models.SlugField(max_length=150, unique=True, db_index=True, verbose_name='URL')
-    author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True)  # Auth_User - Дефолтная табл
+    author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True)
     photo = models.ImageField(upload_to="photos/%Y/%m/%d/")
     content = models.TextField(blank=True)
     time_create = models.DateTimeField(auto_now_add=True)
@@ -104,6 +104,7 @@ class Blog(models.Model):
 class Cook(models.Model):
     name = models.CharField(max_length=150, verbose_name='Имя повара')
     position = models.CharField(max_length=100, verbose_name='Должность')
+    photo = models.ImageField(upload_to="photo/%Y/%m/%d/")
 
     def __str__(self):
         return self.name

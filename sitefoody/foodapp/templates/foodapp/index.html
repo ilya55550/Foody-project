@@ -98,26 +98,32 @@
         </div>
       </div>
 
+
+      {% if dishs %}
       <div class="container">
+
+
 
         <div class="row no-gutters">
           <div class="col-md-6">
+
             <div class="sched d-block d-lg-flex">
-              <div class="bg-image order-2" style="background-image: url({% static 'foodapp/img/dishes_4.jpg'%});" data-aos="fade"></div>
+              <div class="bg-image order-2" style="background-image: url({{ dishs.0.image.url }});" data-aos="fade"></div>
               <div class="text order-1">
-                <h3>Grilled Caesar salad, shaved reggiano</h3>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Architecto illo delectus...</p>
-                <p class="text-primary h3">$12.00</p>
+                <h3>{{ dishs.0.name }}</h3>
+                <p>{{ dishs.0.description|truncatewords:15}}</p>
+                <p class="text-primary h3">${{ dishs.0.price }}</p>
               </div>
 
             </div>
 
+
             <div class="sched d-block d-lg-flex">
-              <div class="bg-image" style="background-image: url({% static 'foodapp/img/dishes_1.jpg'%});" data-aos="fade"></div>
+              <div class="bg-image" style="background-image: url({{ dishs.1.image.url }});" data-aos="fade"></div>
               <div class="text">
-                <h3>Spicy Calamari and beans</h3>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Architecto illo delectus...</p>
-                <p class="text-primary h3">$12.00</p>
+                <h3>{{ dishs.1.name }}</h3>
+                <p>{{ dishs.1.description|truncatewords:15}}</p>
+                <p class="text-primary h3">${{ dishs.1.price }}</p>
 
               </div>
 
@@ -127,22 +133,22 @@
 
           <div class="col-md-6">
             <div class="sched d-block d-lg-flex">
-              <div class="bg-image order-2" style="background-image: url({% static 'foodapp/img/dishes_2.jpg'%});" data-aos="fade"></div>
+              <div class="bg-image order-2" style="background-image: url({{ dishs.2.image.url }});" data-aos="fade"></div>
               <div class="text order-1">
-                <h3>Bacon wrapped wild gulf prawns</h3>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Architecto illo delectus...</p>
-                <p class="text-primary h3">$18.00</p>
+                <h3>{{ dishs.2.name }}</h3>
+                <p>{{ dishs.2.description|truncatewords:15}}</p>
+                <p class="text-primary h3">${{ dishs.2.price }}</p>
 
               </div>
 
             </div>
 
             <div class="sched d-block d-lg-flex">
-              <div class="bg-image" style="background-image: url({% static 'foodapp/img/dishes_3.jpg'%});" data-aos="fade"></div>
+              <div class="bg-image" style="background-image: url({{ dishs.3.image.url }});" data-aos="fade"></div>
               <div class="text">
-                <h3>Seared ahi tuna fillet*, honey-ginger sauce</h3>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Architecto illo delectus...</p>
-                <p class="text-primary h3">$16.00</p>
+                <h3>{{ dishs.3.name }}</h3>
+                <p>{{ dishs.3.description|truncatewords:15}}</p>
+                <p class="text-primary h3">${{ dishs.3.price }}</p>
 
               </div>
 
@@ -154,21 +160,21 @@
         <div class="row no-gutters">
           <div class="col-md-6">
             <div class="sched d-block d-lg-flex">
-              <div class="bg-image order-2" style="background-image: url({% static 'foodapp/img/dishes_4.jpg'%});" data-aos="fade"></div>
+              <div class="bg-image order-2" style="background-image: url({{ dishs.4.image.url }});" data-aos="fade"></div>
               <div class="text order-1">
-                <h3>Grilled Caesar salad, shaved reggiano</h3>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Architecto illo delectus...</p>
-                <p class="text-primary h3">$12.00</p>
+                <h3>{{ dishs.4.name }}</h3>
+                <p>{{ dishs.4.description|truncatewords:15}}</p>
+                <p class="text-primary h3">${{ dishs.4.price }}</p>
               </div>
 
             </div>
 
             <div class="sched d-block d-lg-flex">
-              <div class="bg-image" style="background-image: url({% static 'foodapp/img/dishes_1.jpg'%});" data-aos="fade"></div>
+              <div class="bg-image" style="background-image: url({{ dishs.5.image.url }});" data-aos="fade"></div>
               <div class="text">
-                <h3>Spicy Calamari and beans</h3>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Architecto illo delectus...</p>
-                <p class="text-primary h3">$12.00</p>
+                <h3>{{ dishs.5.name }}</h3>
+                <p>{{ dishs.5.description|truncatewords:15}}</p>
+                <p class="text-primary h3">${{ dishs.5.price }}</p>
 
               </div>
 
@@ -178,22 +184,22 @@
 
           <div class="col-md-6">
             <div class="sched d-block d-lg-flex">
-              <div class="bg-image order-2" style="background-image: url({% static 'foodapp/img/dishes_2.jpg'%});" data-aos="fade"></div>
+              <div class="bg-image order-2" style="background-image: url({{ dishs.6.image.url }});" data-aos="fade"></div>
               <div class="text order-1">
-                <h3>Bacon wrapped wild gulf prawns</h3>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Architecto illo delectus...</p>
-                <p class="text-primary h3">$18.00</p>
+                <h3>{{ dishs.6.name }}</h3>
+                <p>{{ dishs.6.description|truncatewords:15}}</p>
+                <p class="text-primary h3">${{ dishs.6.price }}</p>
 
               </div>
 
             </div>
 
             <div class="sched d-block d-lg-flex">
-              <div class="bg-image" style="background-image: url({% static 'foodapp/img/dishes_3.jpg'%});" data-aos="fade"></div>
+              <div class="bg-image" style="background-image: url({{ dishs.7.image.url }});" data-aos="fade"></div>
               <div class="text">
-                <h3>Seared ahi tuna fillet*, honey-ginger sauce</h3>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Architecto illo delectus...</p>
-                <p class="text-primary h3">$16.00</p>
+                <h3>{{ dishs.7.name }}</h3>
+                <p>{{ dishs.7.description|truncatewords:15}}</p>
+                <p class="text-primary h3">${{ dishs.7.price }}</p>
 
               </div>
 
@@ -204,6 +210,7 @@
 
 
       </div>
+      {% endif %}
     </section> <!-- .section -->
 
 
@@ -226,42 +233,22 @@
         <div class="row justify-content-center">
           <div class="col-lg-7">
             <div class="owl-carousel centernonloop2">
+
+              {% for review in reviews %}
               <div class="slide" data-aos="fade-left" data-aos-delay="100">
                 <blockquote class="testimonial">
-                  <p>&ldquo; Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean. &rdquo;</p>
+                  <p>&ldquo;{{review.content|truncatewords:40}}&rdquo;</p>
                   <div class="d-flex author">
-                    <img src="{% static 'foodapp/img/person_1.jpg' %}" alt="" class="mr-4">
+                    <img src="{{ review.cook.image.url }}" alt="" class="mr-4">
                     <div class="author-info">
-                      <h4>Mellisa Howard</h4>
-                      <p>CEO, XYZ Company</p>
+                      <h4>{{review.cook.name}}</h4>
+                      <p>{{review.cook.position}}</p>
                     </div>
                   </div>
                 </blockquote>
               </div>
-              <div class="slide" data-aos="fade-left" data-aos-delay="200">
-                <blockquote class="testimonial">
-                  <p>&ldquo; Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean. &rdquo;</p>
-                  <div class="d-flex author">
-                    <img src="{% static 'foodapp/img/person_2.jpg' %}" alt="" class="mr-4">
-                    <div class="author-info">
-                      <h4>Mike Richardson</h4>
-                      <p>CEO, XYZ Company</p>
-                    </div>
-                  </div>
-                </blockquote>
-              </div>
-              <div class="slide" data-aos="fade-left" data-aos-delay="300">
-                <blockquote class="testimonial">
-                  <p>&ldquo; Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean. &rdquo;</p>
-                  <div class="d-flex author">
-                    <img src="{% static 'foodapp/img/person_3.jpg' %}" alt="" class="mr-4">
-                    <div class="author-info">
-                      <h4>Charles White</h4>
-                      <p>CEO, XYZ Company</p>
-                    </div>
-                  </div>
-                </blockquote>
-              </div>
+              {% endfor %}
+
             </div>
           </div>
         </div>
