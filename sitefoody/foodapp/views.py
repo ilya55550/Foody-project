@@ -1,8 +1,15 @@
 from django.shortcuts import render
+from django.views import View
+from .models import *
 
 
-def index(request):
-    return render(request, 'foodapp/index.html')
+class HomePage(View):
+    def get(self, request):
+        special_menu = Dish.objects.filter(special_menu=True)[:2]
+        context = {
+            'special_menu': special_menu,
+        }
+        return render(request, 'foodapp/index.html', context=context)
 
 
 def about(request):

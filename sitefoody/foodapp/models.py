@@ -4,20 +4,21 @@ from django.conf import settings
 
 
 class Dish(models.Model):
-    slug = models.SlugField(max_length=150, unique=True, db_index=True, verbose_name='URL')
     name = models.CharField(max_length=150, verbose_name='Название блюда')
-    recipe = models.ForeignKey('Recipe', on_delete=models.SET_NULL, null=True)
+    slug = models.SlugField(max_length=150, unique=True, db_index=True, verbose_name='URL')
+    recipe = models.TextField()
     description = models.TextField(blank=True)
     time_create = models.DateTimeField(auto_now_add=True)
     price = models.PositiveIntegerField()
+    image = models.ImageField(upload_to="image/%Y/%m/%d/")
     special_menu = models.BooleanField()
     category = models.ForeignKey('Category', on_delete=models.SET_NULL, null=True)
 
     def __str__(self):
         return self.name
 
-    # def get_absolute_url(self):
-    #     return reverse('post', kwargs={'post_slug': self.slug})
+    def get_absolute_url(self):
+        return reverse('post', kwargs={'post_slug': self.slug})
 
     class Meta:
         verbose_name = 'Блюдо'
@@ -25,17 +26,17 @@ class Dish(models.Model):
         ordering = ['-time_create']
 
 
-class Recipe(models.Model):
-    name = models.CharField(max_length=150, verbose_name='Название рецепта')
-    content = models.TextField()
-
-    def __str__(self):
-        return self.name
-
-    class Meta:
-        verbose_name = 'Рецепт'
-        verbose_name_plural = 'Рецепты'
-        ordering = ['id']
+# class Recipe(models.Model):
+#     name = models.CharField(max_length=150, verbose_name='Название рецепта')
+#     content = models.TextField()
+#
+#     def __str__(self):
+#         return self.name
+#
+#     class Meta:
+#         verbose_name = 'Рецепт'
+#         verbose_name_plural = 'Рецепты'
+#         ordering = ['id']
 
 
 class Category(models.Model):

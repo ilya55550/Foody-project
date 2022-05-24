@@ -69,34 +69,18 @@
           </div>
         </div>
         <div class="owl-carousel centernonloop">
-          <a href="#" class="item-dishes" data-aos="fade-right" data-aos-delay="100">
+
+          {% for dish in special_menu %}
+          <a href="{{ p.get_absolute_url }}" class="item-dishes" data-aos="fade-right" data-aos-delay="100">
             <div class="text">
-              <p class="dishes-price">$11.50</p>
-              <h2 class="dishes-heading">Organic tomato salad, gorgonzola cheese, capers</h2>
+              <p class="dishes-price">{{ dish.price }}</p>
+              <h2 class="dishes-heading">{{ dish.name }}</h2>
             </div>
-            <img src="{% static 'foodapp/img/dishes_1.jpg' %}" alt="" class="img-fluid">
+            {% if dish.image %}
+              <img src="{{ dish.image.url }}" alt="" class="img-fluid">
+            {% endif %}
           </a>
-          <a href="#" class="item-dishes" data-aos="fade-right" data-aos-delay="200">
-            <div class="text">
-              <p class="dishes-price">$12.00</p>
-              <h2 class="dishes-heading">Baked broccoli</h2>
-            </div>
-            <img src="{% static 'foodapp/img/dishes_2.jpg' %}" alt="" class="img-fluid">
-          </a>
-          <a href="#" class="item-dishes" data-aos="fade-right" data-aos-delay="300">
-            <div class="text">
-              <p class="dishes-price">$11.00</p>
-              <h2 class="dishes-heading">Spicy meatballs</h2>
-            </div>
-            <img src="{% static 'foodapp/img/dishes_3.jpg' %}" alt="" class="img-fluid">
-          </a>
-          <a href="#" class="item-dishes" data-aos="fade-right" data-aos-delay="400">
-            <div class="text">
-              <p class="dishes-price">$12.00</p>
-              <h2 class="dishes-heading">Eggplant parmigiana</h2>
-            </div>
-            <img src="{% static 'foodapp/img/dishes_4.jpg' %}" alt="" class="img-fluid">
-          </a>
+          {% endfor %}
         </div>
       </div>
 
