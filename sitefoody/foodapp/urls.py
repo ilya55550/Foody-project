@@ -4,5 +4,5 @@ from foodapp.views import *
 
 urlpatterns = [
     path('', HomePage.as_view(), name='home'),
-    path('about/', about, name='about'),
+    path('blogs/', BlogsPage.as_view(), name='blogs'),
 ]

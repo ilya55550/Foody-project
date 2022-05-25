@@ -1,0 +1,39 @@
+{% extends 'foodapp/base.html' %}
+{% load static %}
+<!DOCTYPE html>
+
+{% block title %}
+{{ title }}{{ block.super }}
+{% endblock %}
+
+{% include 'foodapp/inc/_slider.html' %}
+
+{% block content %}
+<section class="section bg-light pt-0 bottom-slant-gray">
+    <div class="container">
+        <div class="row">
+            {% for blog in blogs %}
+            <div class="col-md-6" data-aos="fade-up" data-aos-delay="100">
+                <div class="blog d-block">
+                    <a class="bg-image d-block" href="{{ blog.image.url }}"
+                       style="background-image: url({{ blog.image.url }});"></a>
+                    <div class="text">
+                        <h3><a href="single.html">{{ blog.name }}</a></h3>
+                        <p class="sched-time">
+                            <span><span class="fa fa-calendar"></span> {{ blog.time_create }}</span> <br>
+                        </p>
+                        <p>{{ blog.content|truncatewords:20 }}</p>
+
+                        <p><a href="#" class="btn btn-primary btn-sm">Read More</a></p>
+
+                    </div>
+
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+    

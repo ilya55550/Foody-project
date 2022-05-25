@@ -88,7 +88,7 @@ class Blog(models.Model):
     name = models.CharField(max_length=150, verbose_name='Название блога')
     slug = models.SlugField(max_length=150, unique=True, db_index=True, verbose_name='URL')
     author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True)
-    image = models.ImageField(upload_to="photos/%Y/%m/%d/")
+    image = models.ImageField(upload_to="image/%Y/%m/%d/")
     content = models.TextField(blank=True)
     time_create = models.DateTimeField(auto_now_add=True)
     category = models.ManyToManyField(Category)
