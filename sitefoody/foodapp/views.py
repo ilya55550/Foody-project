@@ -8,10 +8,12 @@ class HomePage(View):
         special_menu = Dish.objects.filter(special_menu=True)[:2]
         dishs = Dish.objects.all()[:8]
         reviews = Review.objects.all()
+        blogs = Blog.objects.all()[:2]
         context = {
             'special_menu': special_menu,
             'dishs': dishs,
             'reviews': reviews,
+            'blogs': blogs,
         }
         return render(request, 'foodapp/index.html', context=context)
 

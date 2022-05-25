@@ -53,7 +53,12 @@ class Category(models.Model):
 
 
 class Tag(models.Model):
-    name = models.CharField(max_length=100, verbose_name='Тэг')
+    name = models.CharField(max_length=100, unique=True, verbose_name='Тэг')
+
+    # def save(self, force_insert=False, force_update=False, using=None, update_fields=None):
+    #     if self.name[0] != '#':
+    #         self.name = '#' + self.name
+    #     super().save(force_insert=False, force_update=False, using=None, update_fields=None)
 
     def __str__(self):
         return self.name
@@ -68,6 +73,7 @@ class Comment(models.Model):
     author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)  # Auth_User - Дефолтная табл
     content = models.TextField(blank=True)
     time_create = models.DateTimeField(auto_now_add=True)
+    blog = models.OneToOneField('Blog', on_delete=models.CASCADE, primary_key=True)
 
     def __str__(self):
         return self.content
@@ -82,10 +88,9 @@ class Blog(models.Model):
     name = models.CharField(max_length=150, verbose_name='Название блога')
     slug = models.SlugField(max_length=150, unique=True, db_index=True, verbose_name='URL')
     author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True)
-    photo = models.ImageField(upload_to="photos/%Y/%m/%d/")
+    image = models.ImageField(upload_to="photos/%Y/%m/%d/")
     content = models.TextField(blank=True)
     time_create = models.DateTimeField(auto_now_add=True)
-    comment = models.ManyToManyField(Comment)
     category = models.ManyToManyField(Category)
     tag = models.ManyToManyField(Tag)
 
