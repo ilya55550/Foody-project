@@ -12,7 +12,10 @@
 
 {% include 'foodapp/inc/_slider.html' %}
 
+
 <section class="section bg-light pt-0 bottom-slant-gray">
+    <h1>Выбрана категория - {{ category_slug }}</h1>
+
     <div class="container">
         <div class="row">
             {% for blog in blogs %}

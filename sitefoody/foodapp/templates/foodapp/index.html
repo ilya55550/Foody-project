@@ -6,9 +6,11 @@
 {{ title }}{{ block.super }}
 {% endblock %}
 
-{% include 'foodapp/inc/_slider.html' %}
 
 {% block content %}
+
+{% include 'foodapp/inc/_slider.html' %}
+
 <section class="section bg-light py-5  bottom-slant-gray">
     <div class="container">
         <div class="row">
@@ -273,13 +275,13 @@
                 <div class="blog d-block">
                     <a class="bg-image d-block" href="#" style="background-image: url({{ blog.image.url }});"></a>
                     <div class="text">
-                        <h3><a href="single.html">{{ blog.name }}</a></h3>
+                        <h3><a href="{{ blog.get_absolute_url }}">{{ blog.name }}</a></h3>
                         <p class="sched-time">
                             <span><span class="fa fa-calendar"></span> {{ blog.time_create }}</span> <br>
                         </p>
                         <p>{{ blog.content|truncatewords:30 }}</p>
 
-                        <p><a href="#" class="btn btn-primary btn-sm">Read More</a></p>
+                        <p><a href="{{ blog.get_absolute_url }}" class="btn btn-primary btn-sm">Read More</a></p>
 
                     </div>
 

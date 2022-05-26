@@ -17,8 +17,8 @@ class Dish(models.Model):
     def __str__(self):
         return self.name
 
-    def get_absolute_url(self):
-        return reverse('post', kwargs={'post_slug': self.slug})
+    # def get_absolute_url(self):
+    #     return reverse('post', kwargs={'post_slug': self.slug})
 
     class Meta:
         verbose_name = 'Блюдо'
@@ -40,8 +40,12 @@ class Dish(models.Model):
 
 
 class Category(models.Model):
+    """Категории блюд"""
     name = models.CharField(max_length=100, verbose_name='Категория')
+    slug = models.SlugField(max_length=100, unique=True, db_index=True)
     description = models.CharField(max_length=100, blank=True)
+
+
 
     def __str__(self):
         return self.name
@@ -91,14 +95,14 @@ class Blog(models.Model):
     image = models.ImageField(upload_to="image/%Y/%m/%d/")
     content = models.TextField(blank=True)
     time_create = models.DateTimeField(auto_now_add=True)
-    category = models.ManyToManyField(Category)
+    category = models.ManyToManyField('CategoryBlog')
     tag = models.ManyToManyField(Tag)
 
     def __str__(self):
         return self.name
 
-    # def get_absolute_url(self):
-    #     return reverse('post', kwargs={'post_slug': self.slug})
+    def get_absolute_url(self):
+        return reverse('detail_blog', kwargs={'detail_slug': self.slug})
 
     class Meta:
         verbose_name = 'Блог'
@@ -130,4 +134,20 @@ class Review(models.Model):
     class Meta:
         verbose_name = 'отзыв'
         verbose_name_plural = 'отзывы'
+        ordering = ['id']
+
+
+class CategoryBlog(models.Model):
+    name = models.CharField(max_length=100, unique=True)
+    slug = models.SlugField(max_length=100, unique=True, db_index=True)
+
+    def __str__(self):
+        return self.name
+
+    def get_absolute_url(self):
+        return reverse('category_blog', kwargs={'category_slug': self.slug})
+
+    class Meta:
+        verbose_name = 'Категория блога'
+        verbose_name_plural = 'Категории блогов'
         ordering = ['id']
