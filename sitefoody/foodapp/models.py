@@ -2,6 +2,37 @@ from django.db import models
 from django.urls import reverse
 from django.conf import settings
 
+from django.contrib.auth.models import User
+from django.db.models.signals import post_save
+from django.dispatch import receiver
+
+
+class Profile(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    about_me = models.TextField(max_length=500, blank=True)
+    location = models.CharField(max_length=40, blank=True)
+    birth_date = models.DateField(null=True, blank=True)
+    photo = models.ImageField(upload_to="photo_user/%Y/%m/%d/")
+
+    def __str__(self):
+        return self.user.__str__()
+
+    class Meta:
+        verbose_name = 'Профиль'
+        verbose_name_plural = 'Профили'
+        ordering = ['id']
+
+
+@receiver(post_save, sender=User)
+def create_user_profile(sender, instance, created, **kwargs):
+    if created:
+        Profile.objects.create(user=instance)
+
+
+@receiver(post_save, sender=User)
+def save_user_profile(sender, instance, **kwargs):
+    instance.profile.save()
+
 
 class Dish(models.Model):
     name = models.CharField(max_length=150, verbose_name='Название блюда')
@@ -17,26 +48,10 @@ class Dish(models.Model):
     def __str__(self):
         return self.name
 
-    # def get_absolute_url(self):
-    #     return reverse('post', kwargs={'post_slug': self.slug})
-
     class Meta:
         verbose_name = 'Блюдо'
         verbose_name_plural = 'Блюда'
         ordering = ['-time_create']
-
-
-# class Recipe(models.Model):
-#     name = models.CharField(max_length=150, verbose_name='Название рецепта')
-#     content = models.TextField()
-#
-#     def __str__(self):
-#         return self.name
-#
-#     class Meta:
-#         verbose_name = 'Рецепт'
-#         verbose_name_plural = 'Рецепты'
-#         ordering = ['id']
 
 
 class Category(models.Model):
@@ -44,8 +59,6 @@ class Category(models.Model):
     name = models.CharField(max_length=100, verbose_name='Категория')
     slug = models.SlugField(max_length=100, unique=True, db_index=True)
     description = models.CharField(max_length=100, blank=True)
-
-
 
     def __str__(self):
         return self.name
@@ -74,7 +87,7 @@ class Tag(models.Model):
 
 
 class Comment(models.Model):
-    author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)  # Auth_User - Дефолтная табл
+    author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     content = models.TextField(blank=True)
     time_create = models.DateTimeField(auto_now_add=True)
     blog = models.OneToOneField('Blog', on_delete=models.CASCADE, primary_key=True)

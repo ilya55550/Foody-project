@@ -191,12 +191,10 @@
 
             <div class="col-lg-4 sidebar pl-lg-5">
                 <div class="sidebar-box">
-                    <img src="img/person_1.jpg" alt="Image placeholder" class="img-fluid mb-4 w-50 rounded-circle">
-                    <h3>About The Author</h3>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ducimus itaque, autem necessitatibus
-                        voluptate quod mollitia delectus aut, sunt placeat nam vero culpa sapiente consectetur
-                        similique, inventore eos fugit cupiditate numquam!</p>
-                    <p><a href="#" class="btn btn-primary btn-sm">Read More</a></p>
+                    <img src="{{blog.author.profile.photo.url}}" alt="Image placeholder" class="img-fluid mb-4 w-50 rounded-circle">
+                    <h3><a href="#">{{ blog.author }}</a></h3>
+                    <p>{{ blog.author.profile.about_me|truncatewords:10 }}</p>
+                    
                 </div>
 
                 <div class="sidebar-box">
