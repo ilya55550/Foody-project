@@ -92,9 +92,9 @@ class Tag(models.Model):
 
 class Comment(models.Model):
     author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    content = models.TextField(blank=True)
+    content = models.TextField(max_length=150)
     time_create = models.DateTimeField(auto_now_add=True)
-    blog = models.OneToOneField('Blog', on_delete=models.CASCADE, primary_key=True)
+    blog = models.ForeignKey('Blog', on_delete=models.CASCADE)
 
     def __str__(self):
         return self.content

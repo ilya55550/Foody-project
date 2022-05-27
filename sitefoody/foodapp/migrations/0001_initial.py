@@ -119,18 +119,4 @@ class Migration(migrations.Migration):
                 'ordering': ['-time_create'],
             },
         ),
-        migrations.CreateModel(
-            name='Comment',
-            fields=[
-                ('content', models.TextField(blank=True)),
-                ('time_create', models.DateTimeField(auto_now_add=True)),
-                ('blog', models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, primary_key=True, serialize=False, to='foodapp.blog')),
-                ('author', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
-            ],
-            options={
-                'verbose_name': 'Комментарий',
-                'verbose_name_plural': 'Комментарии',
-                'ordering': ['-time_create'],
-            },
-        ),
     ]

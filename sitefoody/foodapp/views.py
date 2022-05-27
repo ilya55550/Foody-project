@@ -1,7 +1,9 @@
 from django.shortcuts import render
 from django.views import View
+from django.views.generic.edit import FormMixin
 from django.views.generic import ListView, DetailView
 from .models import *
+from .forms import *
 
 
 class HomePage(View):
@@ -61,13 +63,32 @@ class TagBlogPage(ListView):
         return context | {'tag_slug': tag_slug}
 
 
-class DetailBlogPage(DetailView):
+class DetailBlogPage(FormMixin, DetailView):
     model = Blog
-    template_name = 'foodapp/detail_blog.html'
     slug_url_kwarg = 'detail_slug'
+    template_name = 'foodapp/detail_blog.html'
     context_object_name = 'blog'
+    form_class = CreateCommentForm
+
+    def get_success_url(self):
+        return reverse('detail_blog', kwargs={'detail_slug': self.get_object().slug})
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
-        category_blogs = CategoryBlog.objects.all()[:5]
-        return context | {'category_blogs': category_blogs}
+        context['category_blogs'] = CategoryBlog.objects.all()[:5]
+        context['form'] = CreateCommentForm()
+        return context
+
+    def post(self, request, *args, **kwargs):
+        form = self.get_form()
+        if form.is_valid():
+            return self.form_valid(form)
+        else:
+            return self.form_invalid(form)
+
+    def form_valid(self, form):
+        self.object = form.save(commit=False)
+        self.object.blog = self.get_object()
+        self.object.author = self.request.user
+        self.object.save()
+        return super().form_valid(form)
