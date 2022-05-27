@@ -71,6 +71,7 @@ class Category(models.Model):
 
 class Tag(models.Model):
     name = models.CharField(max_length=100, unique=True, verbose_name='Тэг')
+    slug = models.SlugField(max_length=100, unique=True, db_index=True)
 
     # def save(self, force_insert=False, force_update=False, using=None, update_fields=None):
     #     if self.name[0] != '#':
@@ -79,6 +80,9 @@ class Tag(models.Model):
 
     def __str__(self):
         return self.name
+
+    def get_absolute_url(self):
+        return reverse('tag_blog', kwargs={'tag_slug': self.slug})
 
     class Meta:
         verbose_name = 'Тэг'

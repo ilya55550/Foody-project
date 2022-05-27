@@ -33,14 +33,32 @@ class CategoryBlogPage(ListView):
     template_name = 'foodapp/category_blogs.html'
     context_object_name = 'blogs'
     paginate_by = 4
+    allow_empty = False
 
     def get_queryset(self):
         return Blog.objects.filter(category__slug=self.kwargs['category_slug'])
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
-        category_slug = self.kwargs['category_slug']
-        return context | {'category_slug': category_slug}
+        category_model = CategoryBlog.objects.get(slug=self.kwargs['category_slug'])
+        category = category_model.name
+        return context | {'category': category}
+
+
+class TagBlogPage(ListView):
+    model = Blog
+    template_name = 'foodapp/tag_blogs.html'
+    context_object_name = 'blogs'
+    paginate_by = 4
+    allow_empty = False
+
+    def get_queryset(self):
+        return Blog.objects.filter(tag__slug=self.kwargs['tag_slug'])
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        tag_slug = self.kwargs['tag_slug']
+        return context | {'tag_slug': tag_slug}
 
 
 class DetailBlogPage(DetailView):

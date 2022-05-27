@@ -52,9 +52,9 @@
                         Tags:
                         {% for tag in blog.tag.all %}
                         {% if forloop.last %}
-                        <a href="#">{{ tag.name }}</a>
+                        <a href="{{ tag.get_absolute_url }}">{{ tag.name }}</a>
                         {% else %}
-                        <a href="#">{{ tag.name }}</a>,
+                        <a href="{{ tag.get_absolute_url }}">{{ tag.name }}</a>,
                         {% endif %}
                         {% endfor %}
 
@@ -194,7 +194,7 @@
                     <img src="{{blog.author.profile.photo.url}}" alt="Image placeholder" class="img-fluid mb-4 w-50 rounded-circle">
                     <h3><a href="#">{{ blog.author }}</a></h3>
                     <p>{{ blog.author.profile.about_me|truncatewords:10 }}</p>
-                    
+
                 </div>
 
                 <div class="sidebar-box">
