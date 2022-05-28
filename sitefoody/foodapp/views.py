@@ -92,3 +92,9 @@ class DetailBlogPage(FormMixin, DetailView):
         self.object.author = self.request.user
         self.object.save()
         return super().form_valid(form)
+
+
+class RecipesPage(ListView):
+    model = Dish
+    template_name = 'foodapp/recipes.html'
+    context_object_name = 'dishs'

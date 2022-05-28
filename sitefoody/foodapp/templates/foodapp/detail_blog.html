@@ -63,9 +63,9 @@
                 <!-- comment-list -->
                 <div class="pt-5">
                     {% if blog.comment_set.all|length == 0 %}
-                    <h3 class="mb-5">Комментарий нет</h3>
+                    <h3 class="mb-5">Комментариев нет</h3>
                     {% else %}
-                    <h3 class="mb-5">Количество комментарий: {{ blog.comment_set.all|length }}</h3>
+                    <h3 class="mb-5">Количество комментариев: {{ blog.comment_set.all|length }}</h3>
                     {% endif %}
                     <ul class="comment-list">
                         {% for comment in blog.comment_set.all %}
@@ -122,7 +122,7 @@
                     <div class="categories">
                         <h3>Categories Blog</h3>
                         {% for category_blog in category_blogs %}
-                        <li><a href="{{ category_blog.get_absolute_url }}">{{ category_blog.name }}<span>(12)</span></a>
+                        <li><a href="{{ category_blog.get_absolute_url }}">{{ category_blog.name }}<span>({{ category_blog.blog_set.all|length }})</span></a>
                         </li>
                         {% endfor %}
 
