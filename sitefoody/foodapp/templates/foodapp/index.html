@@ -15,11 +15,11 @@
     <div class="container">
         <div class="row">
             {% for category in categories %}
-                <div class="col-md-6 mb-4 mb-lg-0 col-lg-3 text-left service-block" data-aos="fade-up" data-aos-delay="">
-                    <span class="wrap-icon"><span class="flaticon-dinner d-block mb-4"></span></span>
-                    <h3 class="mb-2 text-primary">{{ category.name }}</h3>
-                    <p>{{ category.description|truncatewords:10 }}</p>
-                </div>
+            <div class="col-md-6 mb-4 mb-lg-0 col-lg-3 text-left service-block" data-aos="fade-up" data-aos-delay="">
+                <span class="wrap-icon"><span class="flaticon-dinner d-block mb-4"></span></span>
+                <h3 class="mb-2 text-primary">{{ category.name }}</h3>
+                <p>{{ category.description|truncatewords:10 }}</p>
+            </div>
             {% endfor %}
         </div>
     </div>
@@ -98,117 +98,33 @@
 
     {% if dishs %}
     <div class="container">
-
-
         <div class="row no-gutters">
-            <div class="col-md-6">
-
-                <div class="sched d-block d-lg-flex">
-                    <div class="bg-image order-2" style="background-image: url({{ dishs.0.image.url }});"
-                         data-aos="fade"></div>
-                    <div class="text order-1">
-                        <h3>{{ dishs.0.name }}</h3>
-                        <p>{{ dishs.0.description|truncatewords:15}}</p>
-                        <p class="text-primary h3">${{ dishs.0.price }}</p>
-                    </div>
-
-                </div>
-
-
-                <div class="sched d-block d-lg-flex">
-                    <div class="bg-image" style="background-image: url({{ dishs.1.image.url }});" data-aos="fade"></div>
-                    <div class="text">
-                        <h3>{{ dishs.1.name }}</h3>
-                        <p>{{ dishs.1.description|truncatewords:15}}</p>
-                        <p class="text-primary h3">${{ dishs.1.price }}</p>
-
-                    </div>
-
-                </div>
-
-            </div>
-
+            {% for dish in dishs %}
+            {% if forloop.counter0|divisibleby:"2" %}
             <div class="col-md-6">
                 <div class="sched d-block d-lg-flex">
-                    <div class="bg-image order-2" style="background-image: url({{ dishs.2.image.url }});"
+                    <div class="bg-image order-2" style="background-image: url({{ dish.image.url }});"
                          data-aos="fade"></div>
                     <div class="text order-1">
-                        <h3>{{ dishs.2.name }}</h3>
-                        <p>{{ dishs.2.description|truncatewords:15}}</p>
-                        <p class="text-primary h3">${{ dishs.2.price }}</p>
-
+                        <h3>{{ dish.name }}</h3>
+                        <p>{{ dish.description|truncatewords:15 }}</p>
+                        <p class="text-primary h3">${{ dish.price }}</p>
                     </div>
-
                 </div>
-
+                {% else %}
                 <div class="sched d-block d-lg-flex">
-                    <div class="bg-image" style="background-image: url({{ dishs.3.image.url }});" data-aos="fade"></div>
+                    <div class="bg-image" style="background-image: url({{ dish.image.url }});" data-aos="fade"></div>
                     <div class="text">
-                        <h3>{{ dishs.3.name }}</h3>
-                        <p>{{ dishs.3.description|truncatewords:15}}</p>
-                        <p class="text-primary h3">${{ dishs.3.price }}</p>
+                        <h3>{{ dish.name }}</h3>
+                        <p>{{ dish.description|truncatewords:15 }}</p>
+                        <p class="text-primary h3">${{ dish.price }}</p>
 
                     </div>
-
                 </div>
-
             </div>
+            {% endif %}
+            {% endfor %}
         </div>
-
-        <div class="row no-gutters">
-            <div class="col-md-6">
-                <div class="sched d-block d-lg-flex">
-                    <div class="bg-image order-2" style="background-image: url({{ dishs.4.image.url }});"
-                         data-aos="fade"></div>
-                    <div class="text order-1">
-                        <h3>{{ dishs.4.name }}</h3>
-                        <p>{{ dishs.4.description|truncatewords:15}}</p>
-                        <p class="text-primary h3">${{ dishs.4.price }}</p>
-                    </div>
-
-                </div>
-
-                <div class="sched d-block d-lg-flex">
-                    <div class="bg-image" style="background-image: url({{ dishs.5.image.url }});" data-aos="fade"></div>
-                    <div class="text">
-                        <h3>{{ dishs.5.name }}</h3>
-                        <p>{{ dishs.5.description|truncatewords:15}}</p>
-                        <p class="text-primary h3">${{ dishs.5.price }}</p>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-            <div class="col-md-6">
-                <div class="sched d-block d-lg-flex">
-                    <div class="bg-image order-2" style="background-image: url({{ dishs.6.image.url }});"
-                         data-aos="fade"></div>
-                    <div class="text order-1">
-                        <h3>{{ dishs.6.name }}</h3>
-                        <p>{{ dishs.6.description|truncatewords:15}}</p>
-                        <p class="text-primary h3">${{ dishs.6.price }}</p>
-
-                    </div>
-
-                </div>
-
-                <div class="sched d-block d-lg-flex">
-                    <div class="bg-image" style="background-image: url({{ dishs.7.image.url }});" data-aos="fade"></div>
-                    <div class="text">
-                        <h3>{{ dishs.7.name }}</h3>
-                        <p>{{ dishs.7.description|truncatewords:15}}</p>
-                        <p class="text-primary h3">${{ dishs.7.price }}</p>
-
-                    </div>
-
-                </div>
-
-            </div>
-        </div>
-
-
     </div>
     {% endif %}
 </section> <!-- .section -->
