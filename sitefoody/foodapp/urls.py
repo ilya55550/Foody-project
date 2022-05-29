@@ -9,5 +9,5 @@ urlpatterns = [
     path('blogs/tag/<slug:tag_slug>/', TagBlogPage.as_view(), name='tag_blog'),
     path('blogs/<slug:detail_slug>/', DetailBlogPage.as_view(), name='detail_blog'),
     path('recipes/', RecipesPage.as_view(), name='recipes'),
-
+    path('about/', AboutPage.as_view(), name='about'),
 ]

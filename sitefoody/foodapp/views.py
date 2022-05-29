@@ -98,3 +98,9 @@ class RecipesPage(ListView):
     model = Dish
     template_name = 'foodapp/recipes.html'
     context_object_name = 'dishs'
+
+
+class AboutPage(ListView):
+    model = Cook
+    template_name = 'foodapp/about.html'
+    context_object_name = 'cooks'
