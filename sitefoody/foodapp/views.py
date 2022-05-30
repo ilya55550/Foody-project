@@ -1,3 +1,5 @@
+import json
+
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.views import View
@@ -6,6 +8,8 @@ from django.views.generic import ListView, DetailView
 from .models import *
 from .forms import *
 from django.core.mail import send_mail
+from .utils import *
+from decouple import config
 
 
 class HomePage(View):
@@ -114,7 +118,11 @@ class ContactPage(FormView):
     success_url = reverse_lazy('home')
 
     def form_valid(self, form):
-        print(form.cleaned_data)
-        message = form.cleaned_data['message'] + f" phone: {form.cleaned_data['phone'].national_number}"
-        send_mail('Contact', message, form.cleaned_data['email'], ['ilja.555@yandex.ru'], fail_silently=False)
+        name_country = country_definition(form.cleaned_data['phone'].country_code)
+        message = form.cleaned_data['message'] + \
+                  f"\n\nДанные отправителя:" \
+                  f"\nТелефон: {form.cleaned_data['phone']}, Страна: {name_country}" \
+                  f"\nEmail: {form.cleaned_data['email']}"
+        send_mail('Contact', message, config('EMAIL_HOST_USER'), [config('EMAIL_RECEIVES_MESSAGES')],
+                  fail_silently=False)
         return super(ContactPage, self).form_valid(form)
