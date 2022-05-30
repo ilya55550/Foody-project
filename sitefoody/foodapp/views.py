@@ -1,9 +1,11 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
+from django.urls import reverse_lazy
 from django.views import View
-from django.views.generic.edit import FormMixin
+from django.views.generic.edit import FormMixin, FormView
 from django.views.generic import ListView, DetailView
 from .models import *
 from .forms import *
+from django.core.mail import send_mail
 
 
 class HomePage(View):
@@ -104,3 +106,15 @@ class AboutPage(ListView):
     model = Cook
     template_name = 'foodapp/about.html'
     context_object_name = 'cooks'
+
+
+class ContactPage(FormView):
+    form_class = ContactForm
+    template_name = 'foodapp/contact.html'
+    success_url = reverse_lazy('home')
+
+    def form_valid(self, form):
+        print(form.cleaned_data)
+        message = form.cleaned_data['message'] + f" phone: {form.cleaned_data['phone'].national_number}"
+        send_mail('Contact', message, form.cleaned_data['email'], ['ilja.555@yandex.ru'], fail_silently=False)
+        return super(ContactPage, self).form_valid(form)
