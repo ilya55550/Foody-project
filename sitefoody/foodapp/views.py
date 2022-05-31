@@ -16,7 +16,7 @@ class HomePage(View):
     def get(self, request):
         special_menu = Dish.objects.filter(special_menu=True)[:5]
         dishs = Dish.objects.filter(special_menu=False)[:8]
-        reviews = Review.objects.all()
+        reviews = Review.objects.all().select_related('cook')
         blogs = Blog.objects.all()[:2]
         categories = Category.objects.all()[:4]
         context = {
@@ -76,12 +76,17 @@ class DetailBlogPage(FormMixin, DetailView):
     context_object_name = 'blog'
     form_class = CreateCommentForm
 
+    def get_queryset(self):
+        return Blog.objects.filter(slug=self.kwargs['detail_slug']).select_related('author__profile')
+
     def get_success_url(self):
         return reverse('detail_blog', kwargs={'detail_slug': self.get_object().slug})
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
         context['category_blogs'] = CategoryBlog.objects.all()[:5]
+        context['comments'] = Comment.objects.filter(blog__slug=self.kwargs['detail_slug']).defer(
+            "blog").select_related('author__profile')
         context['form'] = CreateCommentForm()
         return context
 

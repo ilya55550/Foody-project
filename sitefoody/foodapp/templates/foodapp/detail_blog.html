@@ -65,10 +65,10 @@
                     {% if blog.comment_set.all|length == 0 %}
                     <h3 class="mb-5">Комментариев нет</h3>
                     {% else %}
-                    <h3 class="mb-5">Количество комментариев: {{ blog.comment_set.all|length }}</h3>
+                    <h3 class="mb-5">Количество комментариев: {{ comments|length }}</h3>
                     {% endif %}
                     <ul class="comment-list">
-                        {% for comment in blog.comment_set.all %}
+                        {% for comment in comments %}
                         <li class="comment">
                             <div class="vcard bio">
                                 <img src="{{ comment.author.profile.photo.url }}" alt="Image placeholder">
