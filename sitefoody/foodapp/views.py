@@ -10,22 +10,40 @@ from .forms import *
 from django.core.mail import send_mail
 from .utils import *
 from decouple import config
+from .tasks import first_message_distribution
 
 
 class HomePage(View):
-    def get(self, request):
+    def get_context_data(self, *, object_list=None, **kwargs):
         special_menu = Dish.objects.filter(special_menu=True)[:5]
         dishs = Dish.objects.filter(special_menu=False)[:8]
         reviews = Review.objects.all().select_related('cook')
         blogs = Blog.objects.all()[:2]
         categories = Category.objects.all()[:4]
+        email_distr_form = EmailForDistributionForm()
         context = {
             'special_menu': special_menu,
             'dishs': dishs,
             'reviews': reviews,
             'blogs': blogs,
-            'categories': categories
+            'categories': categories,
+            'email_distr_form': email_distr_form,
         }
+        return context
+
+    def get(self, request):
+        context = self.get_context_data()
+        return render(request, 'foodapp/index.html', context=context)
+
+    def post(self, request):
+        email_distr_form = EmailForDistributionForm(request.POST)
+        context = self.get_context_data() | {'email_distr_form': email_distr_form}
+
+        if email_distr_form.is_valid():
+            email_distr_form.save()
+            first_message_distribution.delay(email_distr_form.instance.email)
+            return redirect('home')
+
         return render(request, 'foodapp/index.html', context=context)
 
 
@@ -128,6 +146,9 @@ class ContactPage(FormView):
                   f"\n\nДанные отправителя:" \
                   f"\nТелефон: {form.cleaned_data['phone']}, Страна: {name_country}" \
                   f"\nEmail: {form.cleaned_data['email']}"
-        send_mail('Contact', message, config('EMAIL_HOST_USER'), [config('EMAIL_RECEIVES_MESSAGES')],
+        send_mail('Contact',
+                  message,
+                  config('EMAIL_HOST_USER'),
+                  [config('EMAIL_RECEIVES_MESSAGES')],
                   fail_silently=False)
         return super(ContactPage, self).form_valid(form)

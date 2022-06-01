@@ -168,3 +168,15 @@ class CategoryBlog(models.Model):
         verbose_name = 'Категория блога'
         verbose_name_plural = 'Категории блогов'
         ordering = ['id']
+
+
+class EmailForDistribution(models.Model):
+    email = models.EmailField()
+
+    def __str__(self):
+        return self.email
+
+    class Meta:
+        verbose_name = 'email'
+        verbose_name_plural = 'emails'
+        ordering = ['id']

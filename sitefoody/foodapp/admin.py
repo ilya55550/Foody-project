@@ -32,3 +32,5 @@ admin.site.register(Comment)
 admin.site.register(Dish, DishAdmin)
 admin.site.register(Category, CategoryAdmin)
 admin.site.register(CategoryBlog, CategoryBlogAdmin)
+admin.site.register(EmailForDistribution)
+

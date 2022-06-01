@@ -18,3 +18,12 @@ class ContactForm(forms.Form):
     email = forms.EmailField(widget=forms.TextInput(attrs={'class': 'form-control'}))
     message = forms.CharField(widget=forms.Textarea(attrs={'class': 'form-control', "rows": 5}))
 
+
+class EmailForDistributionForm(forms.ModelForm):
+    class Meta:
+        model = EmailForDistribution
+        fields = ['email']
+        widgets = {
+            'email': forms.TextInput(attrs={'class': 'form-control', 'placeholder': "Enter Email Address"}),
+        }
+

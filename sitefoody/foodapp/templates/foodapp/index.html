@@ -209,4 +209,32 @@
     </div>
 
 </section> <!-- .section -->
+
+<!-- Newsletter -->
+<div class="container mb-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-6 text-center">
+            <div class="row">
+                <div class="col-md-12 mb-3">
+                    <h3>Subsribe Newsletter</h3>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolore ex temporibus magni ipsam
+                        inventore dolorum sunt, amet vel.</p>
+                </div>
+
+                <form action="{% url 'home' %}" method="post" class="col-12 mb-5">
+                    {% csrf_token %}
+                    <div class="row align-items-center">
+                        <div class="col-md-8 mb-3 mb-md-0">
+                            {{ email_distr_form.email }}
+                            {{ email_distr_form.email.errors }}
+                        </div>
+                        <div class="col-md-4">
+                            <input type="submit" class="btn btn-primary btn-block" value="Subscribe">
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}
