@@ -6,6 +6,7 @@
 **Стек:**
 - Python >= 3.9
 - Django >= 3
+- Django REST Framework >= 3.13.1
 - PostgreSQL == 13
 - Celery == 5.2.7
 
