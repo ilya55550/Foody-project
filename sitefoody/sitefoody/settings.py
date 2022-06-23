@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'rest_framework',
 
     'foodapp',
+    'foodapp_api',
 ]
 
 MIDDLEWARE = [
@@ -152,3 +153,9 @@ CELERY_RESULT_BACKEND = 'redis://' + REDIS_HOST + ':' + REDIS_PORT + '/0'
 CELERY_ACCEPT_CONTENT = ['application/json']
 CELERY_TASK_SERIALIZER = 'json'
 CELERY_RESULT_SERIALIZER = 'json'
+
+# REST_FRAMEWORK = {
+#     'DEFAULT_PERMISSION_CLASSES': [
+#         'rest_framework.permissions.AllowAny',
+#     ]
+# }
