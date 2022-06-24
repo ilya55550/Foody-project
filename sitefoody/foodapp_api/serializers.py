@@ -57,3 +57,15 @@ class ListBlogSerializer(serializers.ModelSerializer):
     class Meta:
         model = Blog
         fields = ('name', 'author', 'image', 'content', 'time_create', 'category', 'tag')
+
+
+class CreateUpdateDeleteBlogSerializer(serializers.ModelSerializer):
+    author = serializers.HiddenField(default=serializers.CurrentUserDefault())
+    category = serializers.SlugRelatedField(slug_field='name', required=False, queryset=Category.objects.all())
+    tag = serializers.SlugRelatedField(slug_field='name', required=False, queryset=Tag.objects.all())
+
+    image = serializers.ImageField(required=False)
+
+    class Meta:
+        model = Blog
+        fields = ('name', 'author', 'image', 'content', 'category', 'tag')
