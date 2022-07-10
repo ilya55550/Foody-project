@@ -4,7 +4,7 @@ from rest_framework.response import Response
 
 from rest_framework.viewsets import GenericViewSet
 
-from foodapp.models import Dish, Category, Tag, Comment, Blog
+from foodapp.models import Dish, Category, Tag, Comment, Blog, CategoryBlog
 from .permissions import IsOwnerOrReadOnly
 from .serializers import DishSerializer, CategorySerializer, TagSerializer, CommentSerializer, ListBlogSerializer, \
     CreateUpdateDeleteBlogSerializer
@@ -77,10 +77,52 @@ class BlogViewSet(mixins.CreateModelMixin,
         serializer = ListBlogSerializer(queryset, many=True)
         return Response(serializer.data)
 
+    def create(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        print('До валидатора__________________________________')
+        serializer.is_valid(raise_exception=True)
+        print('После валидатора__________________________________')
+
+        self.perform_create(serializer)
+        headers = self.get_success_headers(serializer.data)
+        return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
+    # def create(self, request, *args, **kwargs):
+    #     print(f'request.POST {request.data}')
+    #
+    #     categories = request.data.pop('category')
+    #     tags = request.data.pop('tag')
+    #     print('categories/tag')
+    #     print(categories)
+    #     print(tags)
+    #     print('request')
+    #     print(request.data['name'])
+    #     print('-----------')
+    #     print(request.data['content'])
+    #
+    #     # print(*request.data)
+    #
+    #     blog = Blog.objects.create(data=request.data)
+    #     print('create')
+        # for category in categories:
+        #     # d = dict(person)
+        #     obj, created = CategoryBlog.objects.get_or_create(name=category)
+        #     print('---------------')
+        #     print(obj)
+        #     print(created)
+        #     print('---------------')
+
+        # return Response({'a'}, status=status.HTTP_201_CREATED)
+
+        # serializer = self.get_serializer(data=request.data)
+        # serializer.is_valid(raise_exception=True)
+        # # print(f'request.POST {request.__dict__}')
+        #
+        # self.perform_create(serializer)
+        # headers = self.get_success_headers(serializer.data)
+        # return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
+
     def get_permissions(self):
         try:
             return [permission() for permission in self.permission_classes_by_action[self.action]]
         except KeyError:
             return [permission() for permission in self.permission_classes]
-
-

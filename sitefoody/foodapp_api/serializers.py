@@ -1,8 +1,11 @@
+from django.db import IntegrityError
 from rest_framework import serializers, viewsets, mixins, status
 from rest_framework.viewsets import GenericViewSet
 from django.contrib.auth.models import User, AnonymousUser
+from django.utils.text import slugify
 
-from foodapp.models import Dish, Category, Tag, Comment, Blog
+from foodapp.models import Dish, Category, Tag, Comment, Blog, CategoryBlog
+from base.services import conversion_to_slug
 
 
 class DishSerializer(serializers.ModelSerializer):
@@ -19,7 +22,15 @@ class CategorySerializer(serializers.ModelSerializer):
         fields = ('name',)
 
 
+class CategoryBlogSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = CategoryBlog
+        fields = ('name',)
+
+
 class TagSerializer(serializers.ModelSerializer):
+
     class Meta:
         model = Tag
         fields = ('name',)
@@ -50,9 +61,9 @@ class CommentSerializer(serializers.ModelSerializer):
 
 
 class ListBlogSerializer(serializers.ModelSerializer):
-    author = serializers.HiddenField(default=serializers.CurrentUserDefault())
-    category = CategorySerializer(many=True)
-    tag = TagSerializer(many=True)
+    author = serializers.SlugRelatedField(slug_field='username', read_only=True)
+    category = CategoryBlogSerializer(many=True, read_only=True)
+    tag = TagSerializer(many=True, read_only=True)
 
     class Meta:
         model = Blog
@@ -61,11 +72,39 @@ class ListBlogSerializer(serializers.ModelSerializer):
 
 class CreateUpdateDeleteBlogSerializer(serializers.ModelSerializer):
     author = serializers.HiddenField(default=serializers.CurrentUserDefault())
-    category = serializers.SlugRelatedField(slug_field='name', required=False, queryset=Category.objects.all())
-    tag = serializers.SlugRelatedField(slug_field='name', required=False, queryset=Tag.objects.all())
+    # category = serializers.SlugRelatedField(slug_field='name', required=False, queryset=CategoryBlog.objects.all())
+    # tag = serializers.SlugRelatedField(slug_field='name', required=False, queryset=Tag.objects.all())
+
+    category = CategoryBlogSerializer(many=True, read_only=True)
+    tag = TagSerializer(many=True, read_only=True)
 
     image = serializers.ImageField(required=False)
 
     class Meta:
         model = Blog
         fields = ('name', 'author', 'image', 'content', 'category', 'tag')
+
+    def create(self, validated_data):
+        print(validated_data)
+
+        # categories = validated_data.pop('category')
+        # tags = validated_data.pop('tag')
+
+        validated_data['slug'] = conversion_to_slug(validated_data['name'])
+        print(f'validated_data: {validated_data}')
+
+        try:
+            blog = Blog.objects.create(**validated_data)
+        except IntegrityError:
+            raise serializers.ValidationError('Сгенерированный slug совпадает с существующим',
+                                              code=status.HTTP_400_BAD_REQUEST)
+        print('create-------')
+        # for category in categories:
+        #     # d = dict(person)
+        #     obj, created = CategoryBlog.objects.get_or_create(name=category)
+        # print('---------------')
+        # print(obj)
+        # print(created)
+        # print('---------------')
+        return blog
+    # return super(CreateUpdateDeleteBlogSerializer, self).create(validated_data)
